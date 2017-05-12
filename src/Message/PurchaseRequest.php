@@ -102,8 +102,8 @@ class PurchaseRequest extends AbstractRequest
             'billingContact.lastname' => $card->getBillingLastName(),
             'billingContact.phone' => $card->getBillingPhone(),
             'billingContact.title' => $card->getBillingTitle(),
+            'billingContact.email' => $card->getEmail(),
             // billing address
-            'billingAddress.email' => $card->getEmail(),
             'billingAddress.city' => $card->getBillingCity(),
             'billingAddress.company' => $card->getBillingCompany(),
             'billingAddress.country' => $card->getBillingCountry(),
