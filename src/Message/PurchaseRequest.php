@@ -103,14 +103,14 @@ class PurchaseRequest extends AbstractRequest
             'billingContact.phone' => $card->getBillingPhone(),
             'billingContact.title' => $card->getBillingTitle(),
             // billing address
-            'billingContact.email' => $card->getEmail(),
-            'billingContact.city' => $card->getBillingCity(),
-            'billingContact.company' => $card->getBillingCompany(),
-            'billingContact.country' => $card->getBillingCountry(),
-            'billingContact.state' => $card->getBillingState(),
-            'billingContact.addressAdditional1' => $card->getBillingAddress1(),
-            'billingContact.addressAdditional2' => $card->getBillingAddress2(),
-            'billingContact.zipCode' => $card->getBillingPostcode(),
+            'billingAddress.email' => $card->getEmail(),
+            'billingAddress.city' => $card->getBillingCity(),
+            'billingAddress.company' => $card->getBillingCompany(),
+            'billingAddress.country' => $card->getBillingCountry(),
+            'billingAddress.state' => $card->getBillingState(),
+            'billingAddress.addressAdditional1' => $card->getBillingAddress1(),
+            'billingAddress.addressAdditional2' => $card->getBillingAddress2(),
+            'billingAddress.zipCode' => $card->getBillingPostcode(),
         ];
 
         return array_filter($fields);
