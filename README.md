@@ -1,11 +1,15 @@
-# Omnipay gateway for Worldline Sips Office JSON API (Atos Sips 2.0)
+# Omnipay gateway for Worldline (Atos) Sips 2.0
+
+This gateway implements *Sips PayPage POST API* only.
 
 ## Gateway parameters
 
+Gateway is provided default *Sogenactif* (Société Générale) testing credentials.
+
 | Parameter | Default value |
 | --------- | ------------- |
-| merchantId | *required* |
-| secretKey | *required* |
+| merchantId | `002001000000001` |
+| secretKey | `002001000000001_KEY1` |
 | interfaceVersion | `"HP_2.9"` |
 | keyVersion | `1` |
-| sipsPaymentInitUrl | `'https://payment-webinit.simu.sips-atos.com/paymentInit'` |
+| url | `https://payment-webinit.simu.sips-atos.com` |

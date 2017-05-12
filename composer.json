@@ -10,6 +10,18 @@
             "email": "ambroise@rezo-zero.com"
         }
     ],
+    "keywords": [
+        "gateway",
+        "merchant",
+        "omnipay",
+        "pay",
+        "payment",
+        "atos",
+        "sips",
+        "sips2",
+        "worldline",
+        "sogenactif"
+    ],
     "autoload": {
         "psr-4": {
             "Omnipay\\SipsPayPage\\": "src/"
@@ -20,5 +32,8 @@
     },
     "require-dev": {
         "omnipay/tests": "~2.0"
+    },
+    "scripts": {
+        "test": "phpunit"
     }
 }

@@ -4,6 +4,7 @@ namespace Omnipay\SipsPayPage\Message;
 
 use Omnipay\Common\Message\AbstractRequest;
 use Omnipay\SipsPayPage\Composer\ShaComposer;
+use Omnipay\SipsPayPage\Composer\ParameterComposer;
 
 class PurchaseRequest extends AbstractRequest
 {
@@ -30,11 +31,11 @@ class PurchaseRequest extends AbstractRequest
         'customerContact', 'customerContact.email', 'customerContact.firstname',
         'customerContact.gender', 'customerContact.lastname', 'customerContact.mobile',
         'customerContact.phone', 'customerContact.title', 'expirationDate', 'automaticResponseUrl',
-        'templateName', 'paymentMeanBrandList'
+        'templateName', 'paymentMeanBrandList', 'orderId'
     );
 
     protected $requiredFields = array(
-        'amount', 'currencyCode', 'merchantId', 'normalReturnUrl',
+        'amount', 'currencyCode', 'merchantId', 'returnUrl',
         'transactionReference', 'keyVersion'
     );
 
@@ -42,52 +43,42 @@ class PurchaseRequest extends AbstractRequest
         'nl', 'fr', 'de', 'it', 'es', 'cy', 'en'
     );
 
+    public static function getCurrencies()
+    {
+        return static::$currencies;
+    }
+
     /**
      * @inheritDoc
      */
     public function getData()
     {
         $this->validate(
-            'amount', 'currencyCode', 'merchantId', 'normalReturnUrl',
-            'transactionReference', 'keyVersion',
+            'amount',
+            'currencyCode',
+            'merchantId',
+            'returnUrl',
+            'keyVersion',
+            'interfaceVersion',
             'card'
         );
 
-        $data = [];
+        $data = [
+            'normalReturnUrl' => $this->getReturnUrl(),
+            'automaticResponseUrl' => $this->getNotifyUrl(),
+            'orderId' => $this->getTransactionId(),
+        ];
+
+
         foreach ($this->sipsFields as $fieldName) {
             if ($this->parameters->has($fieldName)) {
                 $data[$fieldName] = $this->parameters->get($fieldName);
             }
         }
 
+        $data = array_filter($data);
+
         return array_merge($data, $this->extractCardParameters());
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function setCurrency($value)
-    {
-        parent::setCurrency($value);
-
-        if (!isset(static::$currencies[$value])) {
-            throw new \InvalidArgumentException('Currency is not supported.');
-        }
-
-        return $this->setParameter('currencyCode', static::$currencies[$value]);
-    }
-
-
-    /**
-     * @inheritDoc
-     */
-    public function sendData($data)
-    {
-        // TODO: Implement sendData() method.
-        $shaComposer = new ShaComposer($this->getParameter('secretKey'));
-        $seal = $shaComposer->compose($data);
-
-
     }
 
     /**
@@ -134,8 +125,118 @@ class PurchaseRequest extends AbstractRequest
         return array_filter($fields);
     }
 
-    public static function getCurrencies()
+    /**
+     * @inheritDoc
+     */
+    public function setCurrency($value)
     {
-        return static::$currencies;
+        parent::setCurrency($value);
+
+        if (!isset(static::$currencies[$value])) {
+            throw new \InvalidArgumentException('Currency is not supported.');
+        }
+
+        return $this->setParameter('currencyCode', static::$currencies[$value]);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function sendData($data)
+    {
+        // TODO: Implement sendData() method.
+        $shaComposer = new ShaComposer($this->getParameter('secretKey'));
+        $parameterComposer = new ParameterComposer();
+
+        return new PurchaseResponse($this, [
+            'Data' => $parameterComposer->compose($data),
+            'InterfaceVersion' => $this->getParameter('interfaceVersion'),
+            'Seal' => $shaComposer->compose($data),
+        ]);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getMerchantId()
+    {
+        return $this->getParameter('merchantId');
+    }
+
+    /**
+     * @param $merchantId
+     * @return AbstractRequest
+     */
+    public function setMerchantId($merchantId)
+    {
+        return $this->setParameter('merchantId', $merchantId);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSecretKey()
+    {
+        return $this->getParameter('secretKey');
+    }
+
+    /**
+     * @param $secretKey
+     * @return AbstractRequest
+     */
+    public function setSecretKey($secretKey)
+    {
+        return $this->setParameter('secretKey', $secretKey);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUrl()
+    {
+        return $this->getParameter('url');
+    }
+
+    /**
+     * @param $url
+     * @return AbstractRequest
+     */
+    public function setUrl($url)
+    {
+        return $this->setParameter('url', $url);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getInterfaceVersion()
+    {
+        return $this->getParameter('interfaceVersion');
+    }
+
+    /**
+     * @param $interfaceVersion
+     * @return AbstractRequest
+     */
+    public function setInterfaceVersion($interfaceVersion)
+    {
+        return $this->setParameter('interfaceVersion', $interfaceVersion);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getKeyVersion()
+    {
+        return $this->getParameter('keyVersion');
+    }
+
+    /**
+     * @param $keyVersion
+     * @return AbstractRequest
+     */
+    public function setKeyVersion($keyVersion)
+    {
+        return $this->setParameter('keyVersion', $keyVersion);
     }
 }

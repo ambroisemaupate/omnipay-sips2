@@ -2,8 +2,6 @@
 
 namespace Omnipay\SipsPayPage\Composer;
 
-use Omnipay\SipsPayPage\ParameterComposer;
-
 class ShaComposer implements ComposerInterface
 {
     /**

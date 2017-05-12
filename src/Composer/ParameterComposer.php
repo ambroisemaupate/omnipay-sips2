@@ -1,8 +1,6 @@
 <?php
 
-namespace Omnipay\SipsPayPage;
-
-use Omnipay\SipsPayPage\Composer\ComposerInterface;
+namespace Omnipay\SipsPayPage\Composer;
 
 class ParameterComposer implements ComposerInterface
 {
