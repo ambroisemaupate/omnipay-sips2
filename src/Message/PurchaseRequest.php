@@ -2,7 +2,6 @@
 
 namespace Omnipay\SipsPayPage\Message;
 
-use Omnipay\Common\Message\AbstractRequest;
 use Omnipay\SipsPayPage\Composer\ShaComposer;
 use Omnipay\SipsPayPage\Composer\ParameterComposer;
 
@@ -18,7 +17,7 @@ class PurchaseRequest extends AbstractRequest
     );
 
     protected $sipsFields = array(
-        'amount', 'currencyCode', 'merchantId', 'normalReturnUrl',
+        'currencyCode', 'merchantId', 'normalReturnUrl',
         'transactionReference', 'keyVersion', 'paymentMeanBrand', 'customerLanguage',
         'billingAddress.city', 'billingAddress.company', 'billingAddress.country',
         'billingAddress', 'billingAddress.postBox', 'billingAddress.state',
@@ -32,15 +31,6 @@ class PurchaseRequest extends AbstractRequest
         'customerContact.gender', 'customerContact.lastname', 'customerContact.mobile',
         'customerContact.phone', 'customerContact.title', 'expirationDate', 'automaticResponseUrl',
         'templateName', 'paymentMeanBrandList', 'orderId'
-    );
-
-    protected $requiredFields = array(
-        'amount', 'currencyCode', 'merchantId', 'returnUrl',
-        'transactionReference', 'keyVersion'
-    );
-
-    protected $allowedlanguages = array(
-        'nl', 'fr', 'de', 'it', 'es', 'cy', 'en'
     );
 
     public static function getCurrencies()
@@ -60,15 +50,11 @@ class PurchaseRequest extends AbstractRequest
             'returnUrl',
             'keyVersion',
             'interfaceVersion',
-            'card'
+            'card',
+            'secretKey'
         );
 
-        $data = [
-            'normalReturnUrl' => $this->getReturnUrl(),
-            'automaticResponseUrl' => $this->getNotifyUrl(),
-            'orderId' => $this->getTransactionId(),
-        ];
-
+        $data = [];
 
         foreach ($this->sipsFields as $fieldName) {
             if ($this->parameters->has($fieldName)) {
@@ -76,9 +62,14 @@ class PurchaseRequest extends AbstractRequest
             }
         }
 
-        $data = array_filter($data);
+        $data = array_merge($data, $this->extractCardParameters(), [
+            'normalReturnUrl' => $this->getReturnUrl(),
+            'automaticResponseUrl' => $this->getNotifyUrl(),
+            'orderId' => $this->getTransactionId(),
+            'amount' => $this->getAmountInteger(),
+        ]);
 
-        return array_merge($data, $this->extractCardParameters());
+        return array_filter($data);
     }
 
     /**
@@ -144,7 +135,6 @@ class PurchaseRequest extends AbstractRequest
      */
     public function sendData($data)
     {
-        // TODO: Implement sendData() method.
         $shaComposer = new ShaComposer($this->getParameter('secretKey'));
         $parameterComposer = new ParameterComposer();
 
@@ -153,90 +143,5 @@ class PurchaseRequest extends AbstractRequest
             'InterfaceVersion' => $this->getParameter('interfaceVersion'),
             'Seal' => $shaComposer->compose($data),
         ]);
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getMerchantId()
-    {
-        return $this->getParameter('merchantId');
-    }
-
-    /**
-     * @param $merchantId
-     * @return AbstractRequest
-     */
-    public function setMerchantId($merchantId)
-    {
-        return $this->setParameter('merchantId', $merchantId);
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getSecretKey()
-    {
-        return $this->getParameter('secretKey');
-    }
-
-    /**
-     * @param $secretKey
-     * @return AbstractRequest
-     */
-    public function setSecretKey($secretKey)
-    {
-        return $this->setParameter('secretKey', $secretKey);
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getUrl()
-    {
-        return $this->getParameter('url');
-    }
-
-    /**
-     * @param $url
-     * @return AbstractRequest
-     */
-    public function setUrl($url)
-    {
-        return $this->setParameter('url', $url);
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getInterfaceVersion()
-    {
-        return $this->getParameter('interfaceVersion');
-    }
-
-    /**
-     * @param $interfaceVersion
-     * @return AbstractRequest
-     */
-    public function setInterfaceVersion($interfaceVersion)
-    {
-        return $this->setParameter('interfaceVersion', $interfaceVersion);
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getKeyVersion()
-    {
-        return $this->getParameter('keyVersion');
-    }
-
-    /**
-     * @param $keyVersion
-     * @return AbstractRequest
-     */
-    public function setKeyVersion($keyVersion)
-    {
-        return $this->setParameter('keyVersion', $keyVersion);
     }
 }

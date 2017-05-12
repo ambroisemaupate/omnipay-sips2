@@ -137,8 +137,8 @@ class Gateway extends AbstractGateway
      * @param array $options
      * @return \Omnipay\Common\Message\RequestInterface
      */
-    /*public function completePurchase(array $options = array())
+    public function completePurchase(array $options = array())
     {
         return $this->createRequest('\Omnipay\SipsPayPage\Message\CompletePurchaseRequest', $options);
-    }*/
+    }
 }

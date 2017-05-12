@@ -1,0 +1,24 @@
+HTTP/1.1 200 OK
+Cache-Control: private, max-age=0
+Content-Type: text/html; charset=utf-8
+Date: Fri, 15 Feb 2013 14:10:53 GMT
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>Redirecting...</title>
+    </head>
+    <body onload="document.forms[0].submit();">
+        <form action="https://payment-webinit.simu.sips-atos.com/paymentInit" method="post">
+            <p>Redirecting to payment page...</p>
+            <p>
+                <input type="hidden" name="Data" value="currencyCode=978|merchantId=002001000000001|keyVersion=1|customerContact.email=test@test.com|billingContact.email=test@test.com|normalReturnUrl=http://localhost/return|automaticResponseUrl=http://localhost/notify|amount=1000" />
+<input type="hidden" name="InterfaceVersion" value="HP_2.9" />
+<input type="hidden" name="Seal" value="d9b8ca281fed7212ab4eb0bdcdd16336dde8e9ac132947cc0125a113f9bd2080" />
+
+                <input type="submit" value="Continue" />
+            </p>
+        </form>
+    </body>
+</html>

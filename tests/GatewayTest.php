@@ -4,14 +4,13 @@ use Omnipay\Omnipay;
 use Omnipay\SipsPayPage\OffsiteCreditCard;
 use Omnipay\Tests\GatewayTestCase;
 
-define( 'SPP_MERCHANTID', '002001000000001' );
-define( 'SPP_SECRETKEY', '002001000000001_KEY1' );
-define( 'SPP_URL', 'https://payment-webinit.simu.sips-atos.com' );
+define('SPP_MERCHANTID', '002001000000001');
+define('SPP_SECRETKEY', '002001000000001_KEY1');
+define('SPP_URL', 'https://payment-webinit.simu.sips-atos.com');
 
 class GatewayTest extends GatewayTestCase
 {
     /**
-     *
      * @var Gateway
      */
     protected $gateway;
