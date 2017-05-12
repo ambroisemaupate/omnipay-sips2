@@ -96,7 +96,7 @@ class CompletePurchaseRequestTest extends TestCase
 
         $this->assertFalse($response->isCancelled());
         $this->assertTrue($response->isPending());
-        $this->assertFalse($response->isSuccessful());
+        $this->assertTrue($response->isSuccessful());
         $this->assertFalse($response->isRedirect());
     }
 

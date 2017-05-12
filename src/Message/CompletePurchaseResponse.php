@@ -67,7 +67,7 @@ class CompletePurchaseResponse extends AbstractResponse
      */
     public function isSuccessful()
     {
-        return $this->isValid() && $this->getCode() === '00';
+        return $this->isValid() && in_array($this->getCode(), array('00', '60'));
     }
 
     /**
