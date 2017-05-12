@@ -32,10 +32,10 @@ class CompletePurchaseResponse extends AbstractResponse
         parent::__construct($request, $data);
 
         if (!isset($data['Seal'])) {
-            throw new InvalidResponseException('Invalid response from gateway, Seal is missing.');
+            throw new InvalidResponseException('Invalid response from gateway, Seal parameter is missing.');
         }
         if (!isset($data['Data'])) {
-            throw new InvalidResponseException('Invalid response from gateway, Data is missing.');
+            throw new InvalidResponseException('Invalid response from gateway, Data parameter is missing.');
         }
 
         $this->seal = $data['Seal'];
@@ -54,7 +54,9 @@ class CompletePurchaseResponse extends AbstractResponse
         $dataParams = explode('|', $this->composedData);
         foreach ($dataParams as $dataParamString) {
             $dataKeyValue = explode('=', $dataParamString, 2);
-            $parameters[$dataKeyValue[0]] = $dataKeyValue[1];
+            if (count($dataKeyValue) === 2) {
+                $parameters[$dataKeyValue[0]] = $dataKeyValue[1];
+            }
         }
 
         return $parameters;
@@ -93,8 +95,7 @@ class CompletePurchaseResponse extends AbstractResponse
             return false;
         }
 
-        $shaComposer = new ShaComposer($this->request->getSecretKey());
-        if ($this->seal !== $shaComposer->compose($this->fields)) {
+        if ($this->seal !== $this->getSealFromData()) {
             return false;
         }
 
@@ -103,6 +104,15 @@ class CompletePurchaseResponse extends AbstractResponse
         }
 
         return true;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSealFromData()
+    {
+        $shaComposer = new ShaComposer($this->request->getSecretKey());
+        return $shaComposer->compose($this->fields);
     }
 
     /**

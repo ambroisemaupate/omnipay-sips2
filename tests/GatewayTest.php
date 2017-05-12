@@ -48,4 +48,10 @@ class GatewayTest extends GatewayTestCase
         $this->assertSame('http://localhost/return', $request->getReturnUrl());
         $this->assertSame('http://localhost/notify', $request->getNotifyUrl());
     }
+
+    public function testCompletePurchase()
+    {
+        $request = $this->gateway->completePurchase();
+        $this->assertInstanceOf( 'Omnipay\SipsPayPage\Message\CompletePurchaseRequest', $request);
+    }
 }
