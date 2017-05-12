@@ -1,0 +1,24 @@
+{
+    "name": "ambroisemaupate/omnipay-sips2",
+    "description": "Omnipay gateway for Worldline Sips PayPage POST API (Atos Sips 2.0)",
+    "type": "library",
+    "license": "MIT",
+    "homepage": "https://github.com/ambroisemaupate/omnipay-sips2",
+    "authors": [
+        {
+            "name": "Ambroise Maupate",
+            "email": "ambroise@rezo-zero.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Omnipay\\SipsPayPage\\": "src/"
+        }
+    },
+    "require": {
+        "omnipay/common": "~2.0"
+    },
+    "require-dev": {
+        "omnipay/tests": "~2.0"
+    }
+}
