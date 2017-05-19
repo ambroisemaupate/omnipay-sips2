@@ -4,6 +4,7 @@ namespace Omnipay\SipsPayPage\Message;
 
 use Omnipay\SipsPayPage\Composer\ShaComposer;
 use Omnipay\SipsPayPage\Composer\ParameterComposer;
+use Omnipay\SipsPayPage\Normalizer;
 
 class PurchaseRequest extends AbstractRequest
 {
@@ -314,6 +315,8 @@ class PurchaseRequest extends AbstractRequest
             }
         }
 
+        $this->getCard()->validate();
+
         $data = array_merge($data, $this->extractCardParameters(), [
             'normalReturnUrl' => $this->getReturnUrl(),
             'automaticResponseUrl' => $this->getNotifyUrl(),
@@ -351,7 +354,7 @@ class PurchaseRequest extends AbstractRequest
             'customerData.birthDate' => $card->getBirthday(),
             // billing contact
             'billingContact.firstname' => $card->getBillingFirstName(),
-            'billingContact.lastname' => $card->getBillingLastName(),
+            'billingContact.lastname' =>  $card->getBillingLastName(),
             'billingContact.phone' => $card->getBillingPhone(),
             'billingContact.title' => $card->getBillingTitle(),
             'billingContact.email' => $card->getEmail(),

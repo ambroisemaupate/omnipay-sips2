@@ -3,7 +3,6 @@
 namespace Omnipay\SipsPayPage;
 
 use Omnipay\Common\AbstractGateway;
-use Guzzle\Http\Client as HttpClient;
 
 class Gateway extends AbstractGateway
 {

@@ -14,6 +14,8 @@ Gateway is provided default *Sogenactif* (Société Générale) testing credenti
 | keyVersion | `1` |
 | url | `https://payment-webinit.simu.sips-atos.com` |
 
+Be careful, in *test* mode, `transactionReference` parameter is mandatory.
+
 ## Usage
 
 ### First step: offsite payment

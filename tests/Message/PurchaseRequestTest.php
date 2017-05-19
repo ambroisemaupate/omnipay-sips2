@@ -49,4 +49,40 @@ class PurchaseRequestTest extends TestCase
 
         $this->assertEquals($httpResponse->getBody(true), $response->getRedirectResponse()->getContent());
     }
+
+    public function testCardAddress1Limit()
+    {
+        $this->setExpectedException(\Omnipay\Common\Exception\InvalidCreditCardException::class, 'Address1 is too long.');
+        $card = new OffsiteCreditCard();
+        $card->setEmail('test@test.com');
+        $card->setAddress1('uriset aursiet arusiet arusiet rausite nrautie rsauitersauiest i,auice');
+        $this->request->setCard($card);
+
+        /** @var \Omnipay\SipsPayPage\Message\PurchaseResponse $response */
+        $response = $this->request->send();
+
+    }
+
+    public function testCardEmail()
+    {
+        $this->setExpectedException(\Omnipay\Common\Exception\InvalidCreditCardException::class, 'The email parameter is required with OffsiteCreditCard.');
+        $card = new OffsiteCreditCard();
+        $this->request->setCard($card);
+
+        /** @var \Omnipay\SipsPayPage\Message\PurchaseResponse $response */
+        $response = $this->request->send();
+
+    }
+
+    public function testCardNormalize()
+    {
+        $card = new OffsiteCreditCard();
+        $card->setAddress1('11 rue Élie Rochette');
+        $card->setAddress2('éèàù');
+        $card->setFirstName('éèàù');
+
+        $this->assertEquals('11 rue Elie Rochette', $card->getAddress1());
+        $this->assertEquals('eeau', $card->getAddress2());
+        $this->assertEquals('eeau', $card->getFirstName());
+    }
 }
