@@ -65,6 +65,8 @@ if ($response->isSuccessful()) {
     
     $bankTransactionRef = $response->getTransactionReference();
     $websiteOrderId = $response->getTransactionId();
+} elseif ($response->isPending()) {
+    // Do temporary things until we get a success/failed tranaction response.
 } else {
     echo $response->getMessage();
 }
