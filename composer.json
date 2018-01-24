@@ -28,10 +28,10 @@
         }
     },
     "require": {
-        "omnipay/common": "~2.0"
+        "omnipay/common": "~2.0|~2.5"
     },
     "require-dev": {
-        "omnipay/tests": "~2.0"
+        "omnipay/tests": "~2.0|~2.5"
     },
     "scripts": {
         "test": "phpunit"
