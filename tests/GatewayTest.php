@@ -24,7 +24,7 @@ class GatewayTest extends GatewayTestCase
             'secretKey' => SPP_SECRETKEY,
             'url' => SPP_URL,
             'testMode' => true,
-            'interfaceVersion' => 'HP_2.9',
+            'interfaceVersion' => 'HP_2.14',
             'keyVersion' => 1,
         ));
     }

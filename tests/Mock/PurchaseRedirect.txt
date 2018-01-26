@@ -14,7 +14,7 @@ Date: Fri, 15 Feb 2013 14:10:53 GMT
             <p>Redirecting to payment page...</p>
             <p>
                 <input type="hidden" name="Data" value="currencyCode=978|merchantId=002001000000001|keyVersion=1|customerContact.email=test@test.com|billingContact.email=test@test.com|normalReturnUrl=http://localhost/return|automaticResponseUrl=http://localhost/notify|amount=1000" />
-<input type="hidden" name="InterfaceVersion" value="HP_2.9" />
+<input type="hidden" name="InterfaceVersion" value="HP_2.14" />
 <input type="hidden" name="Seal" value="d9b8ca281fed7212ab4eb0bdcdd16336dde8e9ac132947cc0125a113f9bd2080" />
 
                 <input type="submit" value="Continue" />

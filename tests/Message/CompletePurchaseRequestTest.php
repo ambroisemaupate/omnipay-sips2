@@ -15,7 +15,7 @@ class CompletePurchaseRequestTest extends TestCase
         $request->setSecretKey(SPP_SECRETKEY);
         $request->setUrl(SPP_URL);
         $request->setKeyVersion(1);
-        $request->setInterfaceVersion('HP_2.9');
+        $request->setInterfaceVersion('HP_2.14');
 
         return $request;
     }
@@ -96,7 +96,7 @@ class CompletePurchaseRequestTest extends TestCase
 
         $this->assertFalse($response->isCancelled());
         $this->assertTrue($response->isPending());
-        $this->assertTrue($response->isSuccessful());
+        $this->assertFalse($response->isSuccessful());
         $this->assertFalse($response->isRedirect());
     }
 
