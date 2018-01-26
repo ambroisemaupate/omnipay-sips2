@@ -13,7 +13,7 @@ class Gateway extends AbstractGateway
     {
         return array(
             'merchantId' => '002001000000001',
-            'interfaceVersion' => 'HP_2.9',
+            'interfaceVersion' => 'HP_2.14',
             'keyVersion' => 1,
             'secretKey' => '002001000000001_KEY1',
             'url' => 'https://payment-webinit.simu.sips-atos.com',

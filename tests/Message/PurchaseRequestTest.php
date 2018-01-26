@@ -24,7 +24,7 @@ class PurchaseRequestTest extends TestCase
         $this->request->setDescription("Test description.");
 
         $this->request->setKeyVersion(1);
-        $this->request->setInterfaceVersion('HP_2.9');
+        $this->request->setInterfaceVersion('HP_2.14');
 
         $card = new OffsiteCreditCard();
         $card->setEmail('test@test.com');
